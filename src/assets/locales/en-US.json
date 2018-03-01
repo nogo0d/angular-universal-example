@@ -1,0 +1,4 @@
+{
+    "HELLO": "hello {{value}}",
+    "thank-you-message" : "en-US thank-you-message"
+}

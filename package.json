@@ -1,49 +1,29 @@
 {
-    "name": "ng-universal-demo",
-    "version": "0.0.0",
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/angular/universal-starter.git"
-    },
+    "name": "was-vanilla",
+    "version": "0.0.1",
     "contributors": [
-        "AngularClass <hello@angularclass.com>",
-        "PatrickJS <patrick@angularclass.com>",
-        "Jeff Whelpley <jeff@gethuman.com>",
-        "Jeff Cross <crossj@google.com>",
-        "Mark Pieszak <mpieszak84@gmail.com>",
-        "Jason Jean <jasonjean1993@gmail.com>",
-        "Fabian Wiles <fabian.wiles@gmail.com>"
+        "José Monteiro <jose.monteiro@aptoide.com>"
     ],
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
         "build": "ng build",
         "lint": "ng lint --fix",
-
-        "build:client-and-server-bundles-prod": "ng build --deploy-url=https://static.example.com/ --env=prod --prod && ng build --env=prod --prod --app 1 --output-hashing=false",
-        "build:client-and-server-bundles-dev": "ng build --deploy-url=http://static.dev.example.com/ --env=dev --prod && ng build --env=dev --prod --app 1 --output-hashing=false",
-        "build:client-and-server-bundles-local": "ng build --deploy-url=http://static.local.example.com/ --env=local --prod && ng build --env=local --prod --app 1 --output-hashing=false",
-        
-        "build:ssr-prod": "npm run build:client-and-server-bundles-prod; npm run webpack:server",
-        "build:ssr-dev": "npm run build:client-and-server-bundles-dev; npm run webpack:server",
-        "build:ssr-local": "npm run build:client-and-server-bundles-local; npm run webpack:server",
-
+        "i18n": "ng xi18n --output-path=./locales",
         "webpack:server": "webpack --config webpack.server.config.js --progress --colors",
+        "merge-static": "gulp merge-static",
+        "build:ssr-prod": "gulp build-prod",
+        "build:ssr-dev": "gulp build-dev",
+        "build:ssr-local": "gulp build-local",
+        "build-dev": "rm -rf dist && yarn build:ssr-dev && yarn merge-static && yarn webpack:server",
+        "start-dev": "gulp serve",
+        "build-local": "rm -rf dist && yarn build:ssr-local && yarn merge-static && yarn webpack:server",
+        "start-local": "gulp serve",
+        "build-prod": "rm -rf dist && yarn build:ssr-local && yarn merge-static && yarn webpack:server",
+        "start-prod": "gulp serve",
 
-        "serve:ssr-local": "export ENV=\"local\"; node dist/server",
-        "serve:ssr-dev": "export ENV=\"dev\"; node dist/server",
-        "serve:ssr-prod": "export ENV=\"prod\"; node dist/server",
-
-        "build-dev": "yarn build:ssr-dev",
-
-        "start-local": "yarn serve:ssr-local",
-        "start-dev": "yarn serve:ssr-dev",
-        "start-prod": "yarn serve:ssr-prod"
+        "test-build": "ng build --deploy-url=http://cdn.com --env=local --prod"
     },
-    "pre-commit": [
-        "lint"
-    ],
     "private": true,
     "dependencies": {
         "@angular/animations": "^5.0.0",
@@ -59,8 +39,12 @@
         "@nguniversal/common": "^5.0.0-beta.5",
         "@nguniversal/express-engine": "^5.0.0-beta.5",
         "@nguniversal/module-map-ngfactory-loader": "^5.0.0-beta.5",
+        "@ngx-translate/core": "^9.1.1",
+        "@ngx-translate/http-loader": "^2.0.1",
         "core-js": "^2.4.1",
         "express-beautify": "^0.1.3",
+        "gulp": "^3.9.1",
+        "gulp-copy": "^1.1.0",
         "rxjs": "^5.5.2",
         "zone.js": "^0.8.14"
     },
