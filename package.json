@@ -9,7 +9,7 @@
         "start": "ng serve",
         "build": "ng build",
         "lint": "ng lint --fix",
-        "tests": "ng test",
+        
         "webpack:server": "webpack --config webpack.server.config.js --progress --colors",
         "merge-static": "gulp merge-static",
         "build:ssr-prod": "gulp build-prod",
@@ -21,12 +21,13 @@
         "start-local": "gulp serve",
         "build-prod": "rm -rf dist && yarn build:ssr-local && yarn merge-static && yarn webpack:server",
         "start-prod": "gulp serve",
+        
         "test-build-delete": "rm -rf dist",
         "test-build-client": "ng build --env=local --prod",
         "test-build-server": "ng build --env=local --prod --app 1 --output-hashing=false",
         "test-build-server-proxy": "npm run webpack:server",
         "test-run": "node dist/server",
-        "test": "npm run test-build-delete && npm run test-build-client && npm run test-build-server && npm run test-build-server-proxy && npm run test-run"
+        "testing": "npm run test-build-delete && npm run test-build-client && npm run test-build-server && npm run test-build-server-proxy && npm run test-run"
     },
     "pre-commit": [
         "lint"
