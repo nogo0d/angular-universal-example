@@ -10,7 +10,14 @@ import { ngExpressEngine } from '@nguniversal/express-engine';
 // Import module map for lazy loading
 import { provideModuleMap } from '@nguniversal/module-map-ngfactory-loader';
 
-const OPTIMIZE_SERVER = process.env.ENV && process.env.ENV === 'prod';
+import { RequestService } from './src/services/request.service';
+
+const request = <RequestService>{
+    getData: () => {
+        return { locale: 'en-US' };
+    }
+};
+
 
 
 // Faster server renders w/ Prod mode (dev mode never needed)
@@ -18,7 +25,6 @@ enableProdMode();
 
 // Express server
 const app = express();
-
 
 const PORT = process.argv[3] || 4000;
 
@@ -40,10 +46,6 @@ app.engine('html', ngExpressEngine({
 }));
 
 app.set('view engine', 'html');
-if (!OPTIMIZE_SERVER) {
-    const expressBeautify = require('express-beautify')(/*Options*/);
-    app.use(expressBeautify);
-}
 
 app.set('views', join(DIST_FOLDER, 'browser'));
 
@@ -54,7 +56,9 @@ app.get('*.*', express.static(join(DIST_FOLDER, 'browser'), {
 
 // ALl regular routes use the Universal engine
 app.get('*', (req, res) => {
-    res.render('index', { req });
+    res.render('index', {
+        req,
+    });
 });
 
 // Start up the Node server

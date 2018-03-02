@@ -2,14 +2,14 @@ import { NgModule, Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { ThankYouComponent } from './thank-you.component';
 
-import {HttpClientModule, HttpClient} from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+    return new TranslateHttpLoader(http, '/assets/locales/', '.json');
 }
 
 @NgModule({

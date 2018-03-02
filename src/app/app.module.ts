@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, makeStateKey, StateKey, TransferState } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
@@ -8,13 +8,14 @@ import { TransferHttpCacheModule } from '@nguniversal/common';
 
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
+import { TranslateBrowserLoader } from '../services/translate-browser-loader.service';
+import { RequestService } from '../services/request.service';
 
 
-export function HttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http, './assets/locales/', '.json');
+export function exportTranslateStaticLoader(http: HttpClient, transferState: TransferState) {
+    return new TranslateBrowserLoader('/assets/locales/', '.json', transferState, http);
 }
-
 
 @NgModule({
     declarations: [
@@ -26,16 +27,19 @@ export function HttpLoaderFactory(http: HttpClient) {
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient]
+                useFactory: exportTranslateStaticLoader,
+                deps: [HttpClient, TransferState]
             }
-        }),
+        }
+        ),
         RouterModule.forRoot([
             { path: 'thank-you', loadChildren: './pages/thank-you/thank-you.module#ThankYouModule' },
         ], { initialNavigation: 'enabled' }),
         TransferHttpCacheModule,
     ],
-    providers: [],
+    providers: [
+        RequestService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
