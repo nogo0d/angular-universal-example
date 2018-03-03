@@ -10,7 +10,6 @@ import { TransferHttpCacheModule } from '@nguniversal/common';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
 import { TranslateBrowserLoader } from '../services/translate-browser-loader.service';
-import { RequestService } from '../services/request.service';
 
 
 export function exportTranslateStaticLoader(http: HttpClient, transferState: TransferState) {
@@ -37,9 +36,7 @@ export function exportTranslateStaticLoader(http: HttpClient, transferState: Tra
         ], { initialNavigation: 'enabled' }),
         TransferHttpCacheModule,
     ],
-    providers: [
-        RequestService
-    ],
+    providers: [ ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
