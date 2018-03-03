@@ -26,10 +26,6 @@ const template = readFileSync(join(DIST_FOLDER, 'browser', 'index.html')).toStri
 const { AppServerModuleNgFactory, LAZY_MODULE_MAP } = require('./dist/server/main.bundle');
 
 
-function getRequest() {
-    return 'jose';
-}
-
 // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
 app.engine('html', ngExpressEngine({
     bootstrap: AppServerModuleNgFactory,
